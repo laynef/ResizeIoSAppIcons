@@ -25,9 +25,10 @@ const path_trail = image_path.split('/');
 const file_name = path_trail.pop();
 
 resolutions.forEach((num) => {
-    const new_file_name = `${num}x${num}_${file_name}`;
+    const size = `${num}x${num}`;
+    const new_file_name = `${size}_${file_name}`;
     const new_file_path = path_trail.concat([new_file_name]).join('');
-    exec(`convert ${path.resolve(__dirname, image_path)} -resize ${path.resolve(__dirname, new_file_path)}`);
+    exec(`magick convert ${path.resolve(__dirname, image_path)} -resize ${size} ${path.resolve(__dirname, new_file_path)}`);
 });
 
 console.log(`Created all assets for ios`);
