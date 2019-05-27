@@ -23,18 +23,30 @@ const options = [
     { resolution: 1024, prefix: `app_store` },
 ];
 
-const image_path = process.argv[2];
-const path_trail = image_path.split('/');
-const file_name = path_trail.pop();
+const image_path = process.argv[2] || '';
+const regex_path = new RegExp(`\/`, 'g');
 
-options.forEach((data) => {
-    const num = data.resolution;
-    const prefix = data.prefix;
-    const size = `${num}x${num}`;
-    const new_file_name = `${prefix}_${file_name}`;
-    const new_file_path = path_trail.slice(0).concat([new_file_name]).join('/');
-    
-    exec(`magick convert ${image_path} -resize ${size} ${new_file_path}`);
-});
+if (regex_path.test(image_path)) {
 
-console.log(`Created all assets for ios`);
+    const path_trail = image_path.split('/');
+    const file_name = path_trail.pop();
+
+    options.forEach((data) => {
+        const num = data.resolution;
+        const prefix = data.prefix;
+        const size = `${num}x${num}`;
+        const new_file_name = `${prefix}_${file_name}`;
+        const new_file_path = path_trail.slice(0).concat([new_file_name]).join('/');
+        
+        exec(`magick convert ${image_path} -resize ${size} ${new_file_path}`);
+    });
+
+    console.log(`Created all assets for ios`);
+
+} else {
+    console.log(
+`iOS App Icon Image Resizing
+
+appicon (path-to-image)
+`)
+}
