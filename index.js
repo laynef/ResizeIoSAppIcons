@@ -27,7 +27,7 @@ const file_name = path_trail.pop();
 resolutions.forEach((num) => {
     const size = `${num}x${num}`;
     const new_file_name = `${size}_${file_name}`;
-    const new_file_path = path_trail.concat([new_file_name]).join('');
+    const new_file_path = path_trail.concat([new_file_name]).join('/');
     exec(`magick convert ${path.resolve(__dirname, image_path)} -resize ${size} ${path.resolve(__dirname, new_file_path)}`);
 });
 
